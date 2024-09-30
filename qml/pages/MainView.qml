@@ -101,7 +101,7 @@ Page {
     onTriggered: refreshOTPValues();
   }
 
-  SilicaFlickable {
+  Column {
     anchors.fill: parent
 
     PullDownMenu {
@@ -127,8 +127,8 @@ Page {
 
     SilicaListView {
       id: otpList
-      anchors.fill: parent
       model: appWin.listModel
+      height: parent.height - updateProgress.height - searchField.height
       width: parent.width
 
       ViewPlaceholder {
@@ -137,53 +137,8 @@ Page {
         hintText: qsTr("Pull down to add a OTP")
       }
 
-      header: Column {
-        width: parent.width
-        height: headerRow.height + searchRow.height
-        Row {
-          id: headerRow
-          height: Theme.itemSizeSmall
-          width: parent.width
-          ProgressBar {
-            id: updateProgress
-            anchors.topMargin: Theme.paddingLarge * 1.15
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            height: parent.height
-            width: parent.width * 0.65
-            maximumValue: 29
-            value: 29 - seconds_global
-            // Only show when there are enries
-            visible: appWin.listModel.count
-          }
-          PageHeader {
-            id: header
-            anchors.top: parent.top
-            height: Theme.itemSizeSmall
-            width: parent.width * 0.35
-            title: "SailOTP"
-          }
-        }
-        Row {
-          id: searchRow
-          width: parent.width
-          SearchField {
-            id: searchField
-            font.pixelSize: Theme.fontSizeMedium
-            width: parent.width
-// This would be useful, but seems to break the button altogether. Perhaps it'll work later?
-//            canHide: true
-            EnterKey.enabled: false
-            inputMethodHints: Qt.ImhNoPredictiveText // Qt.ImhPreferUppercase | Qt.ImhNoAutoUppercase
-            placeholderText: qsTr("Search")
-            onTextChanged: {
-              searchTerm = searchField.text
-              for (var i = 0; i < appWin.listModel.count; i++) {
-                appWin.listModel.get(i).itemVisible = appWin.listModel.get(i).title.toString().toLowerCase().indexOf(searchField.text.toLowerCase()) > -1
-              }
-            }
-          }
-        }
+      header: PageHeader {
+        title: "SailOTP"
       }
 
       delegate: ListItem {
@@ -322,6 +277,33 @@ Page {
         }
       }
       VerticalScrollDecorator{}
+    }
+
+    SearchField {
+      id: searchField
+      font.pixelSize: Theme.fontSizeMedium
+      width: parent.width
+      // This would be useful, but seems to break the button altogether. Perhaps it'll work later?
+      //            canHide: true
+      EnterKey.enabled: false
+      inputMethodHints: Qt.ImhNoPredictiveText // Qt.ImhPreferUppercase | Qt.ImhNoAutoUppercase
+      placeholderText: qsTr("Search")
+      onTextChanged: {
+        searchTerm = searchField.text
+        for (var i = 0; i < appWin.listModel.count; i++) {
+          appWin.listModel.get(i).itemVisible = appWin.listModel.get(i).title.toString().toLowerCase().indexOf(searchField.text.toLowerCase()) > -1
+        }
+      }
+    }
+
+    ProgressBar {
+      id: updateProgress
+      height: Theme.itemSizeSmall
+      width: parent.width
+      maximumValue: 29
+      value: 29 - seconds_global
+      // Only show when there are enries
+      visible: appWin.listModel.count
     }
   }
 
