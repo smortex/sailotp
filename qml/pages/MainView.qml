@@ -104,32 +104,31 @@ Page {
   Column {
     anchors.fill: parent
 
-    PullDownMenu {
-      MenuItem {
-        text: qsTr("About")
-        onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
-      }
-      MenuItem {
-        text: qsTr("Settings")
-        visible: true
-        onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-      }
-      MenuItem {
-        text: qsTr("Export / Import")
-        onClicked: pageStack.push(Qt.resolvedUrl("ExportPage.qml"), {parentPage: mainPage, mode: "export"})
-      }
-      MenuItem {
-        text: qsTr("Add Token")
-        onClicked: pageStack.push(Qt.resolvedUrl("ScanOTP.qml"), {parentPage: mainPage})
-      }
-    }
-
-
     SilicaListView {
       id: otpList
       model: appWin.listModel
       height: parent.height - updateProgress.height - searchField.height
       width: parent.width
+
+      PullDownMenu {
+        MenuItem {
+          text: qsTr("About")
+          onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
+        }
+        MenuItem {
+          text: qsTr("Settings")
+          visible: true
+          onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+        }
+        MenuItem {
+          text: qsTr("Export / Import")
+          onClicked: pageStack.push(Qt.resolvedUrl("ExportPage.qml"), {parentPage: mainPage, mode: "export"})
+        }
+        MenuItem {
+          text: qsTr("Add Token")
+          onClicked: pageStack.push(Qt.resolvedUrl("ScanOTP.qml"), {parentPage: mainPage})
+        }
+      }
 
       ViewPlaceholder {
         enabled: otpList.count == 0
