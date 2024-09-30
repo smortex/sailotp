@@ -109,6 +109,7 @@ Page {
       model: appWin.listModel
       height: parent.height - updateProgress.height - searchField.height
       width: parent.width
+      clip: true
 
       PullDownMenu {
         MenuItem {
