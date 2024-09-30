@@ -95,7 +95,7 @@ Page {
 
   Timer {
     interval: 500
-    // Timer only runs when app is acitive and we have entries
+    // Timer only runs when app is active and we have entries
     running: Qt.application.active && appWin.listModel.count
     repeat: true
     onTriggered: refreshOTPValues();
