@@ -322,11 +322,11 @@ Page {
         }
       }
       VerticalScrollDecorator{}
-
-      Component.onCompleted: {
-        // Load list of OTP-Entries
-        refreshOTPList();
-      }
     }
+  }
+
+  Component.onCompleted: {
+    // Load list of OTP-Entries
+    refreshOTPList();
   }
 }
